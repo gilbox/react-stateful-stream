@@ -1,6 +1,6 @@
 var p = require('./package');
 
-p.main='lib';
+p.main='./';
 p.scripts=p.devDependencies=undefined;
 
 module.exports = p;

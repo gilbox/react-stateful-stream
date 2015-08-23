@@ -6,8 +6,6 @@ re-examining modular state.
 import React, {Component} from 'react';
 import stateful from 'react-stateful-stream';
 
-const increment = x => x+1;
-
 @stateful({
   count: 0
 }, 'edit')

@@ -73,7 +73,7 @@ const atom = new Atom({count: 0});
 
 on(state => console.log('changed: ', state.count), atom.didSetState$);
 
-atom.updateState(state => {count: state.count+1});
+atom.updateState(state => ({count: state.count+1}));
 
 // => "changed: 1"
 

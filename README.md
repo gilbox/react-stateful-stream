@@ -5,7 +5,7 @@ re-examining modular state.
 ### decorator signature:
 
 ```
-@stateful(initialState, editPropName='edit')
+@stateful(initialState[, edit])
 ```
 
 ### example: `initialState` as object
@@ -14,16 +14,16 @@ re-examining modular state.
 import React, {Component} from 'react';
 import stateful from 'react-stateful-stream';
 
-@stateful({
-  count: 0
-}, 'edit')
+@stateful(
+  { count: 0 },
+  'edit')
 class App extends Component {
   render() {
     const {count, edit} = this.props;
-    
-    const incrementCount = 
+
+    const incrementCount =
       () => edit(state => ({count: state.count+1}));
-    
+
     return <button onClick={incrementCount}>
       count: {count}
     </button>
@@ -31,30 +31,44 @@ class App extends Component {
 }
 ```
 
-### example: `initialState` as function
+### example: `initialState` as function, `edit` as a function
 
-alternatively, our `initialState` argument can be a function 
-in which case it will receive `props` and `context` as arguments
+alternatively, our `initialState` argument can be a function
+in which case it will receive `props` and `context` as arguments.
+
+and, our `edit` argument can be a function in which case it will
+receive `edit` as it's only argument
 
 ```
 import React, {Component} from 'react';
 import stateful from 'react-stateful-stream';
+import u from 'updeep';
+const immutable = u({});
+
+const sub = (edit, ...path) =>
+    transform => edit(u.updateIn(path, transform));
 
 const increment = x => x+1;
 
-@stateful(props => ({
-  count: props.count
-}), 'edit')
+@stateful(
+  ({initialCount}) => immutable({
+    count: initialCount || 0
+  }),
+  edit => ({
+    editCount: sub(edit, 'count')
+  }))
 class App extends Component {
   render() {
-    const {count, edit} = this.props;
-    
-    const incrementCount = 
-      () => edit(state => ({count: state.count+1}));
-    
-    return <button onClick={incrementCount}>
-      count: {count}
-    </button>
+    const {count, editCount} = this.props;
+
+    return (
+      <button
+        onClick={() => editCount(increment)}>
+
+        count: {count}
+
+      </button>
+    )
   }
 }
 ```

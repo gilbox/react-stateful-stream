@@ -143,6 +143,9 @@ into its decorated component.
       }
     }
 
+*Note: `@inject` and `<Inject />` are  optional. If you don't import
+`react-stateful-stream/inject`, they won't be included in your bundle.*
+
 ### `Atom`
 
 We can import the `Atom` class and do something

@@ -73,6 +73,76 @@ class App extends Component {
 }
 ```
 
+### `@inject` decorator
+
+Instead of passing `@stateful` props down the component
+tree, we can use the `@inject` decorator to access
+the state as long as the component is a decendant.
+
+First, pass in an `options` object as the
+third argument of `@stateful`, specifying a
+`contextKey` property.
+
+    @stateful(
+      { count: 0 },
+      edit => ({
+        incrementCount: () => edit(state => ({...state, count: state.count+1}))
+      }),
+      { contextKey: 'countState' })
+    class App extends Component {
+      // ....
+    }
+
+Now wherever we'd like to inject the state,
+utilize the `@inject` decorator, utilizing the same
+key from before:
+
+    import {inject} from 'react-stateful-stream/inject';
+
+    @inject('countState')
+    class Child extends Component {
+      render() {
+        const { count,
+                incrementCount } = this.props.countState;
+
+        return (
+          <button onClick={incrementCount}>
+            increment {count}
+          </button>)
+      }
+    }
+
+Notice that `@inject` will pass the props that are
+normally passed along by `@stateful` in a new prop
+with the same name as the `contextKey`.
+It's done this way to avoid confusion about where our
+various props are coming from.
+
+### `<Inject />` component
+
+Similar to the `@inject` decorator, `<Inject />` allows you to inject
+state if you specified a `contextKey`.
+We specify the `contextKey` as a prop of `<Inject />`
+and the only child of `<Inject />` is a function.
+In that function, `<Inject />` passes an object as a single argument whose
+properties are the props that `@stateful` usually passes
+into its decorated component.
+
+    import {Inject} from 'react-stateful-stream/inject';
+
+    class Child extends Component {
+      render() {
+        return (
+          <Inject contextKey="countState">
+            {({count, incrementCount} =>
+              <button onClick={incrementCount}>
+                increment {count}
+              </button>
+            )}
+          </Inject>
+        )
+      }
+    }
 
 ### `Atom`
 

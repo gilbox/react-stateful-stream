@@ -7,6 +7,7 @@ export default function stateful(initialState, edit, options={}) {
     class StatefulDecorator extends Component {
       static displayName = `Stateful(${getDisplayName(DecoratedComponent)})`;
       static DecoratedComponent = DecoratedComponent;
+      static contextTypes = options.contextTypes;
 
       constructor(props, context) {
         super(props, context);

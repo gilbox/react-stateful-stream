@@ -5,10 +5,10 @@ re-examining modular state.
 ### decorator signature:
 
 ```
-@stateful(initialState[, edit])
+@stateful(initialState[, edit][, options])
 ```
 
-### example: `initialState` as object
+### example: `initialState` as object, `edit` as a string
 
 ```
 import React, {Component} from 'react';
@@ -31,7 +31,7 @@ class App extends Component {
 }
 ```
 
-### example: `initialState` as function, `edit` as a function
+### example: `initialState` as a function, `edit` as a function
 
 alternatively, our `initialState` argument can be a function
 in which case it will receive `props` and `context` as arguments.

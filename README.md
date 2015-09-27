@@ -75,6 +75,8 @@ class App extends Component {
 
 ### `@inject` decorator
 
+    import {inject} from 'react-stateful-stream/inject';
+
 Instead of passing `@stateful` props down the component
 tree, we can use the `@inject` decorator to access
 the state as long as the component is a decendant.
@@ -94,10 +96,8 @@ third argument of `@stateful`, specifying a
     }
 
 Now wherever we'd like to inject the state,
-utilize the `@inject` decorator, utilizing the same
+add the `@inject` decorator, utilizing the same
 key from before:
-
-    import {inject} from 'react-stateful-stream/inject';
 
     @inject('countState')
     class Child extends Component {
@@ -120,15 +120,14 @@ various props are coming from.
 
 ### `<Inject />` component
 
-Similar to the `@inject` decorator, `<Inject />` allows you to inject
-state if you specified a `contextKey`.
+    import {Inject} from 'react-stateful-stream/inject';
+
+Similar to the `@inject` decorator, `<Inject />` allows us to inject state.
 We specify the `contextKey` as a prop of `<Inject />`
 and the only child of `<Inject />` is a function.
 In that function, `<Inject />` passes an object as a single argument whose
 properties are the props that `@stateful` usually passes
 into its decorated component.
-
-    import {Inject} from 'react-stateful-stream/inject';
 
     class Child extends Component {
       render() {
@@ -146,7 +145,7 @@ into its decorated component.
 
 ### `Atom`
 
-you can also import the `Atom` class and do something
+We can import the `Atom` class and do something
 with it.
 
 ```

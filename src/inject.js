@@ -56,8 +56,8 @@ export class Inject extends Component {
   }
 
   render() {
-    const {contextKey} = this.props;
-    const {atom, edit} = this._reactInternalInstance._context[contextKey];
+    const {atom, edit} = this._reactInternalInstance
+                             ._context[this.props.contextKey];
 
     return this.props.children({
       ...atom.state,

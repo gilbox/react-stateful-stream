@@ -164,3 +164,10 @@ atom.updateState(state => ({count: state.count+1}));
 // => "changed: 1"
 
 ```
+
+## react-native support
+
+Same as above, just change the imports by appending `/native`:
+
+    import stateful from 'react-stateful-stream/native';
+    import {inject, Inject} from 'react-stateful-stream/inject/native';

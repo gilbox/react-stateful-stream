@@ -35,6 +35,7 @@ class App extends Component {
 class Child extends Component {
   shouldComponentUpdate() { return false }
   render() {
+    console.log('update Child');
     return (
       <div style={{border: '1px solid red', padding: '10px'}}>
         <div>Child</div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react-native';
 import statefulFactory from './stateful';
 
 const stateful = statefulFactory(React);

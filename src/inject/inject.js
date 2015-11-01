@@ -61,10 +61,7 @@ export default function(React) {
       const {atom, edit} = this._reactInternalInstance
                                ._context[this.props.contextKey];
 
-      return this.props.children({
-        ...atom.state,
-        ...edit
-      })
+      return this.props.children(atom.state, edit)
     }
   }
 

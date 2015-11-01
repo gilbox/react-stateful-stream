@@ -224,8 +224,8 @@ Internally, here's what that looks like:
       return (
         <DecoratedComponent
           {...this.props}
-          {...this.state.state}
-          {...this.edit} />
+          {...this.state.selectedState}
+          {...this.selectedEdit} />
       )
     }
 
@@ -251,10 +251,10 @@ optimizations (in certain situations) over `@provide`.
       }</Provide>
 
 The `children` prop of `<Provide />` is a function that receives
-`select(state)` and `selectState(edit)` args. Where `select`
+`select(state)` and `selectEdit(edit)` args. Where `select`
 is a function that you (optionally) pass in the `select` prop.
-Likewise, `selectState` is a function that you (optionally) pass
-in the `selectState` prop.
+Likewise, `selectEdit` is a function that you (optionally) pass
+in the `selectEdit` prop.
 If either prop is omitted,
 the identity function `x => x` is used.
 

@@ -21,15 +21,15 @@ export default function(React) {
 
         const {edit, atom} = context[PROVIDER_CONTEXT_KEY];
 
-        this.state = { state: select(atom.getState()) };
-        this.edit = selectEdit(edit);
+        this.state = { selectedState: select(atom.getState()) };
+        this.selectedEdit = selectEdit(edit);
         this.atom = atom;
       }
 
       componentDidMount() {
         this.stream = map(newState => {
-          const state = select(newState);
-          if (state !== this.state.state) this.setState({state})
+          const selectedState = select(newState);
+          if (selectedState !== this.state.selectedState) this.setState({selectedState})
         }, this.atom.didSetState$);
       }
 
@@ -41,8 +41,8 @@ export default function(React) {
         return (
           <DecoratedComponent
             {...this.props}
-            {...this.state.state}
-            {...this.edit} />
+            {...this.state.selectedState}
+            {...this.selectedEdit} />
         )
       }
     }
@@ -60,10 +60,10 @@ export default function(React) {
 
     constructor(props, context) {
       super(props, context);
-      const state = props.select(
+      const selectedState = props.select(
         context[PROVIDER_CONTEXT_KEY].atom.getState()
       );
-      this.state = { state };
+      this.state = { selectedState };
     }
 
     componentDidMount() {
@@ -71,8 +71,8 @@ export default function(React) {
       const {select} = this.props;
 
       this.stream = map(newState => {
-        const state = select(newState)
-        if (state !== this.state.state) this.setState({state});
+        const selectedState = select(newState)
+        if (selectedState !== this.state.selectedState) this.setState({selectedState});
       }, atom.didSetState$);
     }
 
@@ -92,11 +92,11 @@ export default function(React) {
 
     _updateEdit(selectEdit) {
       const {atom, edit} = this.context[PROVIDER_CONTEXT_KEY];
-      this.edit = selectEdit(edit);
+      this.selectedEdit = selectEdit(edit);
     }
 
     render() {
-      return this.props.children(this.state.state, this.edit)
+      return this.props.children(this.state.selectedState, this.selectedEdit)
     }
   }
 

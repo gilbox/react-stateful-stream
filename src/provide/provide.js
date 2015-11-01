@@ -21,7 +21,7 @@ export default function(React) {
 
         const {edit, atom} = context[PROVIDER_CONTEXT_KEY];
 
-        this.state = { state: atom.getState() };
+        this.state = { state: select(atom.getState()) };
         this.edit = selectEdit(edit);
         this.atom = atom;
       }
@@ -60,7 +60,9 @@ export default function(React) {
 
     constructor(props, context) {
       super(props, context);
-      const state = context[PROVIDER_CONTEXT_KEY].atom.getState();
+      const state = props.select(
+        context[PROVIDER_CONTEXT_KEY].atom.getState()
+      );
       this.state = { state };
     }
 
@@ -75,7 +77,9 @@ export default function(React) {
     }
 
     componentWillReceiveProps(nextProps) {
-      this._updateEdit(nextProps.selectEdit);
+      if (this.props.selectEdit !== nextProps.selectEdit) {
+        this._updateEdit(nextProps.selectEdit);
+      }
     }
 
     componentWillMount() {

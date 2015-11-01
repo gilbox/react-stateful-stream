@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import stateful from 'react-stateful-stream';
 import u from 'updeep';
 const immutable = u({});
@@ -30,4 +31,4 @@ class App extends Component {
   }
 }
 
-React.render(<App />, document.getElementById('example'));
+ReactDOM.render(<App />, document.getElementById('example'));

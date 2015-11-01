@@ -2,6 +2,8 @@ import Atom from './Atom';
 import {on} from 'flyd';
 import getDisplayName from './get-display-name';
 
+export const PROVIDER_CONTEXT_KEY = '__stateful__';
+
 export default function statefulFactory(React) {
   const {Component, PropTypes} = React;
 
@@ -47,6 +49,10 @@ export default function statefulFactory(React) {
         render() {
           const {atom, state} = this.state;
 
+          if (options.provider) {
+            return <DecoratedComponent {...this.props} />
+          }
+
           return (
             <DecoratedComponent
               atom={atom}
@@ -57,16 +63,24 @@ export default function statefulFactory(React) {
         }
       };
 
-      if (options.contextKey) {
+      const contextKey = options.provider ?
+        PROVIDER_CONTEXT_KEY : options.contextKey;
+
+      if (contextKey) {
         StatefulDecorator.childContextTypes = {
-          [options.contextKey]: React.PropTypes.object
+          [contextKey]: React.PropTypes.object
         }
 
         StatefulDecorator.prototype.getChildContext = function() {
           return {
-            [options.contextKey]: this.state
+            [contextKey]: this.state
           };
         }
+      }
+
+      if (options.dontRender || options.provider) {
+        StatefulDecorator.prototype.shouldComponentUpdate =
+          function() { return false };
       }
 
       return StatefulDecorator;

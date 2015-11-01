@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import stateful from 'react-stateful-stream';
 
 const increment = x => x+1;
@@ -19,4 +20,4 @@ class App extends Component {
   }
 }
 
-React.render(<App />, document.getElementById('example'));
+ReactDOM.render(<App />, document.getElementById('example'));

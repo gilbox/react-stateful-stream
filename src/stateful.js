@@ -50,7 +50,7 @@ export default function statefulFactory(React) {
           const {atom, state} = this.state;
 
           if (options.provider) {
-            return <DecoratedComponent {...this.props} />
+            return <DecoratedComponent atom={atom} {...this.props} />
           }
 
           return (

@@ -171,7 +171,7 @@ property of the `options` (third) argument:
     }
 
 `@provide` is a 3-arity function which takes *select* and
-*selectState* for the first two arguments. (The third argument
+*selectEdit* for the first two arguments. (The third argument
 is the component itself)
 
     @provide(
